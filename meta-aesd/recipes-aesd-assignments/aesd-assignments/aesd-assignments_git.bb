@@ -2,12 +2,14 @@
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda2f7b4f302"
 
-# TODO: Set this  with the path to your assignments rep.  Use ssh protocol and see lecture notes
+RDEPENDS:${PN} += "libgcc"
+
+# DONE: Set this  with the path to your assignments rep.  Use ssh protocol and see lecture notes
 # about how to setup ssh-agent for passwordless access
-SRC_URI = "git@github.com:cu-ecen-aeld/assignments-3-and-later-SshgurkiratSingh.git;protocol=ssh;branch=main"
+SRC_URI = "git://git@github.com:cu-ecen-aeld/assignments-3-and-later-SshgurkiratSingh.git;protocol=ssh;branch=main"
 
 PV = "1.0+git${SRCPV}"
-
+# DONE: set to reference a specific commit hash in your assignment repo
 SRCREV = "f2f5643daa39a226b874399a854b9d8d286a04df"
 
 # This sets your staging directory based on WORKDIR, where WORKDIR is defined at 
@@ -16,33 +18,33 @@ SRCREV = "f2f5643daa39a226b874399a854b9d8d286a04df"
 # in your assignments repo
 S = "${WORKDIR}/git/server"
 
-# TODO: Add the aesdsocket application and any other files you need to install
+# DONE: Add the aesdsocket application and any other files you need to install
 # See https://git.yoctoproject.org/poky/plain/meta/conf/bitbake.conf?h=kirkstone
-FILES:${PN} += "${bindir}/aesdsocket"
-# TODO: customize these as necessary for any libraries you need for your application
+FILES:${PN} += "${S}/aesdsocket"
+FILES:${PN} += "${S}/aesdsocket-start-stop"
+# DONE: customize these as necessary for any libraries you need for your application
 # (and remove comment)
 TARGET_LDFLAGS += "-pthread -lrt"
 
 do_configure () {
-	:
+        :
 }
 
 do_compile () {
-	oe_runmake
+        oe_runmake
 }
 
 do_install () {
+        # DONE: Install your binaries/scripts here.
+        # Be sure to install the target directory with install -d first
+        # Yocto variables ${D} and ${S} are useful here, which you can read about at 
+        # https://docs.yoctoproject.org/ref-manual/variables.html?highlight=workdir#term-D
+        # and
+        # https://docs.yoctoproject.org/ref-manual/variables.html?highlight=workdir#term-S
+        # See example at https://github.com/cu-ecen-aeld/ecen5013-yocto/blob/ecen5013-hello-world/meta-ecen5013/recipes-ecen5013/ecen5013-hello-world/ecen5013-hello-world_git.bb
 
-	# TODO: Install your binaries/scripts here.
-	# Be sure to install the target directory with install -d first
-	install -d ${D}${bindir}
-	install -d ${D}${sysconfdir}/init.d
-	install -m 755 ${S}/aesdsocket ${D}${bindir}/
-	install -m 755 ${S}/aesdsocket-start-stop ${D}${sysconfdir}/init.d/
-
-	# Yocto variables ${D} and ${S} are useful here, which you can read about at 
-	# https://docs.yoctoproject.org/ref-manual/variables.html?highlight=workdir#term-D
-	# and
-	# https://docs.yoctoproject.org/ref-manual/variables.html?highlight=workdir#term-S
-	# See example at https://github.com/cu-ecen-aeld/ecen5013-yocto/blob/ecen5013-hello-world/meta-ecen5013/recipes-ecen5013/ecen5013-hello-world/ecen5013-hello-world_git.bb
+        install -d 0755 ${D}/usr/bin/
+        install -d 0755 ${D}/etc/rcS.d/
+        install -m 0755 ${S}/aesdsocket ${D}/usr/bin/aesdsocket
+        install -m 0755 ${S}/aesdsocket-start-stop ${D}/etc/rcS.d/S99aesdsocket
 }
