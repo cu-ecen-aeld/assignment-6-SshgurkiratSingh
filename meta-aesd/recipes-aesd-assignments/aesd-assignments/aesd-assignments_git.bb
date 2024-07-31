@@ -6,11 +6,11 @@ RDEPENDS:${PN} += "libgcc"
 
 # DONE: Set this  with the path to your assignments rep.  Use ssh protocol and see lecture notes
 # about how to setup ssh-agent for passwordless access
-SRC_URI = "git://git@github.com:cu-ecen-aeld/assignments-3-and-later-SshgurkiratSingh.git;protocol=ssh;branch=main"
+SRC_URI = "git://git@github.com/cu-ecen-aeld/assignments-3-and-later-SshgurkiratSingh.git;protocol=ssh;branch=main"
 
 PV = "1.0+git${SRCPV}"
 # DONE: set to reference a specific commit hash in your assignment repo
-SRCREV = "f2f5643daa39a226b874399a854b9d8d286a04df"
+SRCREV = "054d975e5260adb97c207503b28a0d71de3c3fa7"
 
 # This sets your staging directory based on WORKDIR, where WORKDIR is defined at 
 # https://docs.yoctoproject.org/ref-manual/variables.html?highlight=workdir#term-WORKDIR
@@ -44,7 +44,7 @@ do_install () {
         # See example at https://github.com/cu-ecen-aeld/ecen5013-yocto/blob/ecen5013-hello-world/meta-ecen5013/recipes-ecen5013/ecen5013-hello-world/ecen5013-hello-world_git.bb
 
         install -d 0755 ${D}/usr/bin/
-        install -d 0755 ${D}/etc/rcS.d/
+	install -d ${D}${sysconfdir}/init.d
         install -m 0755 ${S}/aesdsocket ${D}/usr/bin/aesdsocket
-        install -m 0755 ${S}/aesdsocket-start-stop ${D}/etc/rcS.d/S99aesdsocket
+	install -m 755 ${S}/aesdsocket-start-stop ${D}${sysconfdir}/init.d/
 }
