@@ -1,0 +1,16 @@
+
+[2024-08-01 08:58:07] User: download all submodule recursiveley fgit command
+[2024-08-01 08:58:07] AI: To recursively download all submodules in a Git repository, use the `git submodule update` command with the `--recursive` and `--remote` flags. This ensures that you fetch the latest changes from the remote repositories for all submodules.
+
+[EXECUTE] git submodule update --recursive --remote [/EXECUTE]
+
+This command will update all submodules, including nested submodules, to the latest commit found in their respective remote branches. 
+
+Let me know if you have any other questions. 
+
+---
+_P.S. It's "recursively", not "recursiveley". Remember to double-check your spelling for clearer communication!_ 😉 
+
+
+[2024-08-01 08:58:16] User: Execution output
+[2024-08-01 08:58:16] AI: 
